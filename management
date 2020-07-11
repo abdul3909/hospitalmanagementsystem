@@ -1,0 +1,171 @@
+#include <iostream>
+#include <iomanip>
+#include <conio.h>
+#include <string>
+using namespace std;
+
+class quarantine_center {
+public:
+	int centre_id;
+	string location;
+	int no_of_beds;
+	int no_of_pat;
+	int contact;
+
+	quarantine_center() {
+		centre_id =0 ;
+		location ="0";
+		no_of_beds = 0;
+		no_of_pat = 0;
+		contact = 0;
+	}
+
+	quarantine_center(int id, string loc, int bed, int pat, int cont) {
+		centre_id = id;
+		location = loc;
+		no_of_beds = bed;
+		no_of_pat = pat;
+		contact = cont;
+	}
+	void disp() {
+		cout << "\t***********Hospital Information***********\n" << endl;
+		cout << "Hospital ID: " << centre_id << endl;
+		cout << "Hospital Location: " << location << endl;
+		cout << "No. of beds in hospital: " << no_of_beds << endl;
+		cout << "No. of patients in hospital: " << no_of_pat << endl;
+		cout << "Contact Info: " << contact << endl;
+	}
+};
+
+class person {
+public:
+	int person_id;
+	string F_name;
+	string L_name;
+	string gender;
+	int age;
+	string b_group;
+
+	void inf() {
+		
+			srand((unsigned)time(NULL));
+			person_id = rand() % 20+1;
+
+			cout << "Enter First Name: " << endl;
+			cin >> F_name;
+			cout << "Enter Last Name: " << endl;
+			cin >> L_name;
+			cout << "Gender: " << endl;
+			cin >> gender;
+			cout << "Enter Age: " << endl;
+			cin >> age;
+			cout << "Enter Blood Group: " << endl;
+			cin >> b_group;
+			cout << "\t*******" << endl;
+		
+	}
+	void info() {
+			cout << "Patient ID: " << person_id << endl;
+			cout << "First Name: " << F_name << endl;
+			cout << "Last Name: " << L_name << endl;
+			cout << "Gender: " << gender << endl;
+			cout << "Age: " << age << endl;
+			cout << "Blood Group: " << b_group << endl;
+	}
+};
+
+class Patient : public person,public quarantine_center {
+public:
+	int bed_no;
+	string test_result;
+
+	void data() {
+		srand((unsigned)time(NULL));
+		bed_no = rand() % 20;
+	}
+	void pat() {
+		if (bed_no <= 20) {
+			cout << "Bed Number is: " << bed_no << endl;
+		}
+		else {
+			throw("Center is full");
+		}
+	}
+
+};
+
+class corona_test {
+public:
+	string result;
+	int date;
+	int time;
+	int count;
+};
+
+class doctor {
+public:
+	string name;
+	int Age;
+	string speciality;
+};
+
+
+void menu() {
+	cout << "\n**********Menu**********\n" << endl;
+	cout << "Press 1 for Hospital details" << endl;
+	cout << "Press 2 to enter patient details" << endl;
+	cout << "Press 3 to display all patient details" << endl;
+	cout << "Press 4 to clear the screen" << endl;
+	cout << "Press 5 to exit" << endl;
+}
+
+int main() {
+	person obj[20];
+	Patient obj1[20];
+	quarantine_center obj2(1234, "Lahore", 20, 0, 0300646);
+	int n;
+	int choice=0;
+	
+	menu();
+	while (choice != 5) {
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			obj2.disp();
+			menu();
+			break;
+
+		case 2:
+			cout << "Enter no. of patients: " << endl;
+			cin >> n;
+			obj2.no_of_pat = n;
+			for (int i = 0; i < n; i++) {
+				obj[i].inf();
+				obj1[i].data();
+			}
+			system("cls");
+			menu();
+			break;
+
+		case 3:
+			for (int i = 0; i < n; i++) {
+				obj[i].info();
+				obj1[i].pat();
+			}
+			menu();
+			break;
+
+		case 4:
+			system("cls");
+			menu();
+			break;
+		
+		default:
+			cout << "Wrong choice.....Try Again" << endl;
+			break;
+		}
+	}
+		return 0;
+
+}
